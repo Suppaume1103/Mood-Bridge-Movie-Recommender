@@ -1,0 +1,36 @@
+# Maven
+target/
+
+# Java
+*.class
+*.jar
+*.log
+
+# VS Code
+.vscode/launch.json
+.vscode/settings.json
+
+# IDE: IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# IDE: Eclipse
+.classpath
+.project
+.settings/
+
+# 環境変数・APIキー
+.env
+*.env
+config.properties
+application.properties
+secrets.properties
+
+# OpenNLP モデルファイル
+*.bin
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
