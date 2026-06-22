@@ -12,7 +12,10 @@ public class Movie {
     private List<String> genres; // ジャンル
     private String overview; // あらすじ
 
-    public Movie(List genres, int id, String overview, String title) {
+    public Movie() {
+    }
+
+    public Movie(List<String> genres, int id, String overview, String title) {
         this.genres = genres;
         this.id = id;
         this.overview = overview;

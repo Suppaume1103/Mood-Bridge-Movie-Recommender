@@ -9,6 +9,9 @@ public class Review {
     private String content; // レビュー本文
     private double rating; // ユーザースコア
 
+    public Review() {
+    }
+
     public Review(String author, String content, double rating) {
         this.author = author;
         this.content = content;
@@ -38,6 +41,4 @@ public class Review {
     public void setRating(double rating) {
         this.rating = rating;
     }
-
-
 }
