@@ -7,19 +7,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer; // 英語のトークナイズ・ストップワード除去・語幹化を行うクラス
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexOptions;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexReader; // インデックスの読み取りを行うクラス
+import org.apache.lucene.index.IndexWriter; // インデックスの作成・更新を行うクラス
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
-import org.apache.lucene.store.ByteBuffersDirectory;
+import org.apache.lucene.store.ByteBuffersDirectory; // メモリ上にインデックスを作成するための保存領域の実装
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.BytesRef;
 
@@ -46,11 +46,12 @@ public class KeyWordExtractor {
         fieldType.setIndexOptions(IndexOptions.DOCS_AND_FREQS);
         fieldType.setStored(false);
         fieldType.setTokenized(true);
-        fieldType.setStoreTermVectors(true);
+        fieldType.setStoreTermVectors(true); // 単語の出現頻度を取得するためにフィールドにTermVectorを保存するよう設定
         fieldType.freeze();
 
         Map<String, Double> scores = new HashMap<>();
 
+        // インデックス構築
         try (Analyzer analyzer = new EnglishAnalyzer();
                 Directory directory = new ByteBuffersDirectory()) {
 
@@ -62,6 +63,7 @@ public class KeyWordExtractor {
                 }
             }
 
+            // TF-IDFスコア計算
             try (IndexReader reader = DirectoryReader.open(directory)) {
                 int numDocs = reader.numDocs();
                 for (int docId = 0; docId < numDocs; docId++) {
@@ -83,6 +85,7 @@ public class KeyWordExtractor {
             }
         }
 
+        // TF-IDFスコア上位TOP_Nの重要語を抽出
         return scores.entrySet().stream()
                 .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
                 .limit(TOP_N)

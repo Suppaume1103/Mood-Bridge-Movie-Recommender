@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import opennlp.tools.sentdetect.SentenceDetectorME;
-import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.sentdetect.SentenceDetectorME; // 文分割を行うクラス
+import opennlp.tools.sentdetect.SentenceModel; // 学習済みモデルを読み込むためのクラス
 
 /**
  * OpenNLPの英語文分割モデルを使い、レビュー本文を文単位に分割するクラス
