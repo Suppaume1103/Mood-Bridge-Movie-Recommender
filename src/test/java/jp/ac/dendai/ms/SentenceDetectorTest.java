@@ -7,7 +7,6 @@ import java.util.List;
  * 外部APIを使わないため、VS Codeの「Current File」構成でそのまま実行できる。
  */
 public class SentenceDetectorTest {
-
     public static void main(String[] args) {
         SentenceDetector detector = new SentenceDetector();
 

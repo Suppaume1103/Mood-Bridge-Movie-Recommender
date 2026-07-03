@@ -25,7 +25,7 @@ import org.apache.lucene.util.BytesRef;
 
 /**
  * レビュー群からLucene TF-IDFで重要語を抽出するクラス。
- * TMDBのレビューは英語(en-US)のため、KuromojiではなくEnglishAnalyzerを使用する。
+ * TMDBのレビューは英語(en-US)のため、EnglishAnalyzerを使用する。
  */
 public class KeyWordExtractor {
 
@@ -37,6 +37,7 @@ public class KeyWordExtractor {
 
     /**
      * レビュー群からTF-IDFスコア上位の重要語を抽出する
+     * 
      * @param reviews レビューのリスト
      * @return 重要語のリスト(TF-IDFスコア降順、最大TOP_N件)
      */
@@ -51,7 +52,7 @@ public class KeyWordExtractor {
         Map<String, Double> scores = new HashMap<>();
 
         try (Analyzer analyzer = new EnglishAnalyzer();
-             Directory directory = new ByteBuffersDirectory()) {
+                Directory directory = new ByteBuffersDirectory()) {
 
             try (IndexWriter writer = new IndexWriter(directory, new IndexWriterConfig(analyzer))) {
                 for (Review review : reviews) {
