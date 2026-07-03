@@ -60,7 +60,7 @@ public class TmdbClient {
     private static class TmdbMovie {
         int id;
         String title;
-        @SerializedName("genre_ids") List<Integer> genreIds;
+        @SerializedName("genre_ids") List<Integer> genreIds; // TMDBのJSONキーがスネークケース(genre_ids)なのでアノテーションでマッピング
         String overview;
     }
 
@@ -71,7 +71,7 @@ public class TmdbClient {
     private static class TmdbReview {
         String author;
         String content;
-        @SerializedName("author_details") AuthorDetails authorDetails;
+        @SerializedName("author_details") AuthorDetails authorDetails; // genre_ids と同様に、TMDBのJSONキーがスネークケース(author_details)なのでアノテーションでマッピング
     }
 
     private static class AuthorDetails {
