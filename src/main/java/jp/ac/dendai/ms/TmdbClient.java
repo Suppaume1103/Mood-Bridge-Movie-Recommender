@@ -62,6 +62,8 @@ public class TmdbClient {
         String title;
         @SerializedName("genre_ids") List<Integer> genreIds; // TMDBのJSONキーがスネークケース(genre_ids)なのでアノテーションでマッピング
         String overview;
+        @SerializedName("release_date") String releaseDate; // "YYYY-MM-DD"形式
+        @SerializedName("vote_average") Double voteAverage;
     }
 
     private static class ReviewListResponse {
@@ -91,6 +93,13 @@ public class TmdbClient {
         Map.entry(10749, "ロマンス"),
         Map.entry(878,   "SF"),
         Map.entry(53,    "スリラー")
+    );
+
+    /** GUIのジャンル選択リスト用。Map.ofEntriesはイテレーション順序が不定なため、
+     *  表示順を固定するために別途用意する順序付きリスト */
+    public static final List<String> DISPLAY_GENRES = List.of(
+        "ドラマ", "アクション", "ロマンス", "アドベンチャー", "コメディ",
+        "ファンタジー", "ホラー", "犯罪", "ミステリー", "SF", "スリラー"
     );
 
     /**
@@ -133,6 +142,18 @@ public class TmdbClient {
             movie.setId(tmdbMovie.id);
             movie.setTitle(tmdbMovie.title);
             movie.setOverview(tmdbMovie.overview != null ? tmdbMovie.overview : "");
+            movie.setRating(tmdbMovie.voteAverage != null ? tmdbMovie.voteAverage : 0.0);
+
+            // "YYYY-MM-DD"形式の先頭4文字を公開年として解釈(不正値・欠損時は0)
+            int year = 0;
+            if (tmdbMovie.releaseDate != null && tmdbMovie.releaseDate.length() >= 4) {
+                try {
+                    year = Integer.parseInt(tmdbMovie.releaseDate.substring(0, 4));
+                } catch (NumberFormatException e) {
+                    year = 0;
+                }
+            }
+            movie.setReleaseYear(year);
 
             // ジャンルID → ジャンル名 に変換
             List<String> genreNames = new ArrayList<>();

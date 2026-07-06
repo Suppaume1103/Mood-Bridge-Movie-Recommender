@@ -1,5 +1,7 @@
 package jp.ac.dendai.ms;
 
+import java.util.List;
+
 /**
  * MoodAnalyzerの動作確認用テストクラス。
  * GPT APIを実際に呼び出すため、VS Codeのlaunch.jsonでOPENAI_API_KEYを
@@ -12,7 +14,8 @@ public class MoodAnalyzerTest {
 
                 MoodInput input = new MoodInput(
                                 "仕事で失敗して落ち込んでいて、何もやる気が起きない",
-                                "元気を取り戻して前向きな気持ちになりたい");
+                                "元気を取り戻して前向きな気持ちになりたい",
+                                List.of("ドラマ"));
 
                 MoodBridge bridge = analyzer.buildBridge(input);
 

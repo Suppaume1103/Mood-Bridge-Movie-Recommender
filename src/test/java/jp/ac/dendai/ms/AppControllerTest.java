@@ -1,5 +1,7 @@
 package jp.ac.dendai.ms;
 
+import java.util.List;
+
 /**
  * AppControllerの動作確認用テストクラス(CLIで通しテスト)。
  * MoodAnalyzer・TmdbClient・EmotionalArcEstimator・KeyWordExtractor・
@@ -12,7 +14,8 @@ public class AppControllerTest {
                 GptClient gpt = new GptClient();
                 AppController controller = new AppController(gpt);
 
-                MoodInput input = new MoodInput("最近仕事で失敗続きで落ち込んでいる", "前向きな気持ちになりたい");
+                MoodInput input = new MoodInput("最近仕事で失敗続きで落ち込んでいる", "前向きな気持ちになりたい",
+                                List.of("ドラマ", "コメディ", "ロマンス"));
 
                 System.out.println("=== AppController 通しテスト ===");
                 Recommendation rec = controller.onSubmit(input);

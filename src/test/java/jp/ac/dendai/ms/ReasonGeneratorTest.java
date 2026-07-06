@@ -15,7 +15,7 @@ public class ReasonGeneratorTest {
 
         Movie movie = new Movie(List.of("Drama"), 1,
                 "主人公が挫折を経験しながらも、周囲の支えによって再び前を向くまでを描いた物語。",
-                "Sad to Hopeful");
+                7.5, 2020, "Sad to Hopeful");
         EmotionalArc arc = new EmotionalArc(Arrays.asList(-0.8, -0.3, 0.6));
         Recommendation rec = new Recommendation(arc, movie, "");
         List<String> keywords = List.of("hope", "friendship", "recovery");

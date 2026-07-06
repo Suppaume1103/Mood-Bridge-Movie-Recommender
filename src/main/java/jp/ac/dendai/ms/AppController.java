@@ -13,10 +13,6 @@ import java.util.Map;
  */
 public class AppController {
 
-    // MoodInputにジャンル情報がなく、GptClientにもジャンル推定手段がないため、
-    // 固定のジャンル候補ごとに人気No.1の映画を1本ずつ集めて比較対象とする
-    private static final List<String> CANDIDATE_GENRES = List.of("ドラマ", "コメディ", "ロマンス");
-
     private final MoodAnalyzer moodAnalyzer;
     private final TmdbClient tmdbClient;
     private final EmotionalArcEstimator arcEstimator;
@@ -37,11 +33,15 @@ public class AppController {
 
     // --- ユーザーの気分入力を受け取り、映画推薦を生成するメソッド群 ---
     public Recommendation onSubmit(MoodInput input) {
+        if (input.getGenres() == null || input.getGenres().isEmpty()) {
+            throw new AppControllerException("ジャンルが1件も選択されていません", null);
+        }
+
         try {
             MoodBridge bridge = moodAnalyzer.buildBridge(input);
 
             List<Movie> targets = new ArrayList<>();
-            for (String genre : CANDIDATE_GENRES) {
+            for (String genre : input.getGenres()) {
                 List<Movie> found = tmdbClient.searchMovies(genre);
                 if (!found.isEmpty()) {
                     targets.add(found.get(0));
@@ -64,6 +64,7 @@ public class AppController {
             List<String> keywords = keywordExtractor.extractKeywords(reviewsByMovie.get(rec.getMovie()));
             String reason = reasonGenerator.generate(rec, rec.getArc(), keywords);
             rec.setReason(reason);
+            rec.setKeywords(keywords);
 
             this.lastRecommendation = rec;
             return rec;

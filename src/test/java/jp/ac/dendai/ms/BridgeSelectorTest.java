@@ -17,8 +17,8 @@ public class BridgeSelectorTest {
                 new EmotionVector(-0.8, 0.2),
                 new EmotionVector(0.6, 0.6));
 
-        Movie sadToHopeful = new Movie(List.of("Drama"), 1, "序盤は暗いが後半に希望が見える映画", "Sad to Hopeful");
-        Movie alwaysHappy = new Movie(List.of("Comedy"), 2, "終始明るい映画", "Always Happy");
+        Movie sadToHopeful = new Movie(List.of("Drama"), 1, "序盤は暗いが後半に希望が見える映画", 7.0, 2020, "Sad to Hopeful");
+        Movie alwaysHappy = new Movie(List.of("Comedy"), 2, "終始明るい映画", 6.5, 2018, "Always Happy");
 
         List<Movie> movies = new ArrayList<>();
         movies.add(sadToHopeful);
