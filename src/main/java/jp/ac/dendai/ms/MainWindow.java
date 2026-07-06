@@ -83,7 +83,8 @@ public class MainWindow extends JFrame {
                     Thread.currentThread().interrupt();
                     showErrorAndReturnToInput("処理が中断されました。");
                 } catch (ExecutionException e) {
-                    String message = (e.getCause() != null) ? e.getCause().getMessage() : e.getMessage();
+                    Throwable cause = e.getCause();
+                    String message = (cause != null) ? cause.getMessage() : e.getMessage();
                     showErrorAndReturnToInput(message);
                 }
             }

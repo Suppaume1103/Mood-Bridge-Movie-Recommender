@@ -21,7 +21,7 @@ public class InputPanel extends JPanel {
 
     private final JTextArea currentMoodField = new JTextArea(3, 40);
     private final JTextArea targetMoodField = new JTextArea(3, 40);
-    private final JList<String> genreList = new JList<>(TmdbClient.DISPLAY_GENRES.toArray(new String[0]));
+    private final JList<String> genreList = new JList<>(TmdbClient.DISPLAY_GENRES.toArray(String[]::new));
     private final JButton clearButton = new JButton("クリア");
     private final JButton submitButton = new JButton("映画を探す");
 
