@@ -45,7 +45,7 @@ public class TmdbClient {
         Map.entry("mystery",       9648),
         Map.entry("ロマンス",       10749),
         Map.entry("romance",       10749),
-        Map.entry("SF",            878),
+        Map.entry("sf",            878),
         Map.entry("science fiction", 878),
         Map.entry("スリラー",       53),
         Map.entry("thriller",      53)
