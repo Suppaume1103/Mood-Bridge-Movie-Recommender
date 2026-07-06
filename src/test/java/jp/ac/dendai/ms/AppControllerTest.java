@@ -14,7 +14,7 @@ public class AppControllerTest {
                 GptClient gpt = new GptClient();
                 AppController controller = new AppController(gpt);
 
-                MoodInput input = new MoodInput("最近仕事で失敗続きで落ち込んでいる", "前向きな気持ちになりたい",
+                MoodInput input = new MoodInput("最近仕事が順調でいいことだらけ", "絶望的な気分になりたい",
                                 List.of("ドラマ", "コメディ", "ロマンス"));
 
                 System.out.println("=== AppController 通しテスト ===");

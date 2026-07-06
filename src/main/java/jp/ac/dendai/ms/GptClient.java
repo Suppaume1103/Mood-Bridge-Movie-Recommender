@@ -74,7 +74,7 @@ public class GptClient {
                 + "説明文やその他の文字は一切含めないでください。";
 
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-                .model(ChatModel.GPT_4O_MINI)
+                .model(ChatModel.GPT_5_4_MINI)
                 .addSystemMessage(systemPrompt)
                 .addUserMessage(text)
                 .build();
@@ -95,7 +95,7 @@ public class GptClient {
      */
     public String generateReason(String prompt) {
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-                .model(ChatModel.GPT_4O_MINI)
+                .model(ChatModel.GPT_5_4_MINI)
                 .addUserMessage(prompt)
                 .build();
 
