@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -20,6 +21,9 @@ import okhttp3.Response;
 public class TmdbClient {
 
     private static final String BASE_URL = "https://api.themoviedb.org/3";
+
+    // 常に人気上位のみに偏らないよう、取得ページをランダム化する(1〜5ページ目)
+    private static final Random RANDOM = new Random();
 
     private final String apiKey;
     private final OkHttpClient httpClient;
@@ -125,12 +129,14 @@ public class TmdbClient {
             throw new IllegalArgumentException("対応していないジャンルです: " + genre);
         }
 
+        int page = RANDOM.nextInt(5) + 1; // 1〜5からランダムに選び、常に最新の人気上位に偏らないようにする
+
         HttpUrl url = HttpUrl.parse(BASE_URL + "/discover/movie").newBuilder()
                 .addQueryParameter("api_key", apiKey)
                 .addQueryParameter("with_genres", String.valueOf(genreId))
                 .addQueryParameter("language", "en-US")
                 .addQueryParameter("sort_by", "popularity.desc")
-                .addQueryParameter("page", "1")
+                .addQueryParameter("page", String.valueOf(page))
                 .build();
 
         String json = get(url);

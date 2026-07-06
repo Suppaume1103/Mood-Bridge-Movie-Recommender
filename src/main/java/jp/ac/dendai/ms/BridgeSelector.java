@@ -38,8 +38,15 @@ public class BridgeSelector {
             double firstPoint = (Double) points.get(0);
             double lastPoint = (Double) points.get(points.size() - 1);
 
-            double distance = Math.abs(bridge.getStart().getValance() - firstPoint)
+            double arcDelta = lastPoint - firstPoint;
+            double desiredDelta = bridge.getGoal().getValance() - bridge.getStart().getValance();
+
+            double endpointDistance = Math.abs(bridge.getStart().getValance() - firstPoint)
                     + Math.abs(bridge.getGoal().getValance() - lastPoint);
+            // 方向の違いによるペナルティを加味する 変化の向き・大きさのズレも評価
+            double directionPenalty = Math.abs(desiredDelta - arcDelta);
+
+            double distance = endpointDistance + directionPenalty;
 
             if (distance < bestDistance) {
                 bestDistance = distance;

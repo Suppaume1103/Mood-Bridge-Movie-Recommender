@@ -43,8 +43,10 @@ public class AppController {
             List<Movie> targets = new ArrayList<>();
             for (String genre : input.getGenres()) {
                 List<Movie> found = tmdbClient.searchMovies(genre);
-                if (!found.isEmpty()) {
-                    targets.add(found.get(0));
+                // ジャンルごとに最大3件まで候補を選定する
+                int poolSize = Math.min(3, found.size());
+                for (int i = 0; i < poolSize; i++) {
+                    targets.add(found.get(i));
                 }
             }
 
