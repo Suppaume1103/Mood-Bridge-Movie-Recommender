@@ -69,8 +69,8 @@ public class ArcChartPanel extends JPanel {
         g2.drawString("+1", plotLeft - 24, plotTop + 4);
         g2.drawString("0", plotLeft - 14, zeroY + 4);
         g2.drawString("-1", plotLeft - 20, plotBottom + 4);
-        g2.drawString("冒頭", plotLeft, plotBottom + 18);
-        g2.drawString("結末", plotRight - 20, plotBottom + 18);
+        g2.drawString("opening", plotLeft, plotBottom + 18);
+        g2.drawString("ending", plotRight - 20, plotBottom + 18);
     }
 
     private void drawArcLine(Graphics2D g2, int plotLeft, int plotRight, int plotTop, int zeroY) {
