@@ -1,6 +1,5 @@
 package jp.ac.dendai.ms;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,19 +13,20 @@ public class EmotionalArcEstimatorTest {
         GptClient gpt = new GptClient();
         EmotionalArcEstimator estimator = new EmotionalArcEstimator(gpt);
 
-        List<Review> reviews = new ArrayList<>();
-        reviews.add(new Review("user1",
-                "The beginning was very sad and depressing. But by the end, "
-                + "the story became hopeful and left me feeling inspired.", 8.0));
+        Movie movie = new Movie(List.of("Drama"), 0,
+                "A man starts his life in despair after losing everything, "
+                + "but through unexpected friendships he gradually finds hope "
+                + "and by the end achieves happiness.",
+                0.0, 0, "Test Movie");
 
-        EmotionalArc arc = estimator.estimate(reviews);
+        EmotionalArc arc = estimator.estimate(movie);
 
         System.out.println("=== EmotionalArcEstimator テスト ===");
         System.out.println("感情曲線の点列: " + arc.getPoints());
 
-        boolean pass = arc.getPoints().size() >= 2;
+        boolean pass = arc.getPoints() != null && arc.getPoints().size() >= 2;
         System.out.println(pass
-                ? "PASS: 複数の文からvalenceが推定された"
+                ? "PASS: あらすじから複数点のvalenceが推定された"
                 : "FAIL: 点列の数が想定より少ない");
     }
 }

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * レビュー群を文単位に分割し、各文の感情価(valence)をGPT APIで推定して
- * 感情曲線(EmotionalArc)を組み立てるクラス
+ * 映画のタイトル・あらすじをGPT自身の作品知識で補強詳細な英語の物語文に拡張し、
+ * それをSentenceDetectorで文分割した上で各文をGPT APIでvalence評価することで、
+ * 物語の時系列(冒頭→結末)に沿った感情曲線(EmotionalArc)を推定するクラス
  */
 public class EmotionalArcEstimator {
 
@@ -18,18 +19,17 @@ public class EmotionalArcEstimator {
     }
 
     /**
-     * レビュー群から感情曲線を推定する。
-     * 全レビューを出現順に文分割し、各文のvalenceを並べた点列を返す。
-     * @param reviews レビューのリスト
+     * 映画のタイトル・あらすじから感情曲線を推定する。
+     * @param movie 対象映画(タイトル・あらすじを使用)
      * @return 感情曲線
      */
-    public EmotionalArc estimate(List<Review> reviews) {
+    public EmotionalArc estimate(Movie movie) {
+        String expandedSynopsis = gpt.expandSynopsis(movie.getTitle(), movie.getOverview());
+        List<String> sentences = detector.split(expandedSynopsis);
+
         List<Double> points = new ArrayList<>();
-        for (Review review : reviews) {
-            List<String> sentences = detector.split(review.getContent());
-            for (String sentence : sentences) {
-                points.add(gpt.scoreSentiment(sentence));
-            }
+        for (String sentence : sentences) {
+            points.add(gpt.scoreSentiment(sentence));
         }
         return new EmotionalArc(points);
     }

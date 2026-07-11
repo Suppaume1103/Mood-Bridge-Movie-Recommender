@@ -50,20 +50,18 @@ public class AppController {
                 }
             }
 
-            // 選定後にレビューを再取得しないよう、映画ごとのレビューを保持しておく。
-            // Movieはequals/hashCode未オーバーライドのため参照同一性で引く必要があり、
-            // BridgeSelector.select()が候補リストの要素をそのまま返す実装に依存する
-            Map<Movie, List<Review>> reviewsByMovie = new HashMap<>();
+            // 感情曲線はあらすじ(タイトル・overview)から推定するためレビュー取得は不要。
+            // 候補ごとにMap<Movie, EmotionalArc>を構築し、BridgeSelector.select()に渡す
             Map<Movie, EmotionalArc> arcs = new HashMap<>();
             for (Movie movie : targets) {
-                List<Review> reviews = tmdbClient.fetchReviews(movie.getId());
-                reviewsByMovie.put(movie, reviews);
-                arcs.put(movie, arcEstimator.estimate(reviews));
+                arcs.put(movie, arcEstimator.estimate(movie));
             }
 
             Recommendation rec = bridgeSelector.select(bridge, targets, arcs);
 
-            List<String> keywords = keywordExtractor.extractKeywords(reviewsByMovie.get(rec.getMovie()));
+            // レビューは選定後の勝者1本についてのみ取得し、重要語抽出に使用する
+            List<Review> reviews = tmdbClient.fetchReviews(rec.getMovie().getId());
+            List<String> keywords = keywordExtractor.extractKeywords(reviews);
             String reason = reasonGenerator.generate(rec, rec.getArc(), keywords);
             rec.setReason(reason);
             rec.setKeywords(keywords);
