@@ -41,10 +41,10 @@ public class InputPanel extends JPanel {
         targetMoodPanel.setBorder(BorderFactory.createTitledBorder("なりたい気分"));
         targetMoodPanel.add(new JScrollPane(targetMoodField), BorderLayout.CENTER);
 
-        genreList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        genreList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         genreList.setVisibleRowCount(6);
         JPanel genrePanel = new JPanel(new BorderLayout());
-        genrePanel.setBorder(BorderFactory.createTitledBorder("ジャンル(Ctrl+クリックで複数選択・1件以上必須)"));
+        genrePanel.setBorder(BorderFactory.createTitledBorder("ジャンル(1件選択)"));
         genrePanel.add(new JScrollPane(genreList), BorderLayout.CENTER);
 
         clearButton.addActionListener(e -> clearFields());

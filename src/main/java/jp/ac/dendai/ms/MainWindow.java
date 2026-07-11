@@ -61,7 +61,7 @@ public class MainWindow extends JFrame {
     private void onSubmit() {
         MoodInput input = inputPanel.getMoodInput();
         if (input.getGenres() == null || input.getGenres().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "ジャンルを1件以上選択してください。", "入力エラー", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "ジャンルを1件選択してください。", "入力エラー", JOptionPane.WARNING_MESSAGE);
             return;
         }
 

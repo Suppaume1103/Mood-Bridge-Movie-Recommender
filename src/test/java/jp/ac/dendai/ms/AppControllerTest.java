@@ -15,7 +15,7 @@ public class AppControllerTest {
                 AppController controller = new AppController(gpt);
 
                 MoodInput input = new MoodInput("最近仕事が順調でいいことだらけ", "絶望的な気分になりたい",
-                                List.of("ドラマ", "コメディ", "ロマンス"));
+                                List.of("ドラマ"));
 
                 System.out.println("=== AppController 通しテスト ===");
                 Recommendation rec = controller.onSubmit(input);

@@ -9,7 +9,7 @@ import com.openai.models.chat.completions.ChatCompletionCreateParams;
 
 /**
  * GPT APIを一元管理する共通クラス
- * MoodAnalyzer・EmotionAnalyzer・ReasonGeneratorで使用する
+ * MoodAnalyzer・EmotionalArcEstimator・ReasonGeneratorで使用する
  */
 public class GptClient {
 
@@ -45,7 +45,7 @@ public class GptClient {
                 + "説明文やその他の文字は一切含めないでください。";
 
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
-                .model(ChatModel.GPT_4O_MINI)
+                .model(ChatModel.GPT_5_4_MINI)
                 .addSystemMessage(systemPrompt)
                 .addUserMessage(text)
                 .build();

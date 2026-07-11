@@ -142,6 +142,11 @@ public class TmdbClient {
         String json = get(url);
         MovieListResponse response = gson.fromJson(json, MovieListResponse.class);
 
+        // TMDBがエラー応答(resultsを含まないJSON)を返すとresponse/response.resultsがnullになるため防御する
+        if (response == null || response.results == null) {
+            throw new IOException("TMDBの映画検索応答を解析できませんでした(genre=" + genre + ")");
+        }
+
         List<Movie> movies = new ArrayList<>();
         for (TmdbMovie tmdbMovie : response.results) {
             Movie movie = new Movie();
@@ -190,6 +195,11 @@ public class TmdbClient {
         String json = get(url);
         ReviewListResponse response = gson.fromJson(json, ReviewListResponse.class);
 
+        // TMDBがエラー応答(resultsを含まないJSON)を返すとresponse/response.resultsがnullになるため防御する
+        if (response == null || response.results == null) {
+            throw new IOException("TMDBのレビュー取得応答を解析できませんでした(movieId=" + movieId + ")");
+        }
+
         List<Review> reviews = new ArrayList<>();
         for (TmdbReview tmdbReview : response.results) {
             Review review = new Review();
@@ -212,6 +222,9 @@ public class TmdbClient {
         try (Response response = httpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
                 throw new IOException("HTTPエラー: " + response.code());
+            }
+            if (response.body() == null) {
+                throw new IOException("HTTP応答のボディが空です");
             }
             return response.body().string();
         }

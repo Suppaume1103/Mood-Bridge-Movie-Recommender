@@ -16,7 +16,7 @@ public class BridgeSelector {
      * 映画候補群の中から、感情曲線の始点が今の気分に、終点がなりたい気分に
      * 最も近い映画を選びRecommendationを組み立てる。
      * reasonはこの時点では未設定(空文字列)とし、呼び出し側がReasonGeneratorで
-     * 生成した文字列をRecommendation.setReason()で設定する想定。
+     * 生成した文字列をRecommendation.setReason()で設定する。
      *
      * @param bridge 今の気分となりたい気分
      * @param movies 映画候補のリスト
