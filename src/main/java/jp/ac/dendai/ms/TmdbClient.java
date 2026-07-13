@@ -111,7 +111,8 @@ public class TmdbClient {
      * 環境変数 TMDB_API_KEY からAPIキーを読み込む。
      */
     public TmdbClient() {
-        this.apiKey = System.getenv("TMDB_API_KEY");
+        // .envファイルからAPIキーを取得する(EnvLoader参照)
+        this.apiKey = EnvLoader.get("TMDB_API_KEY");
         this.httpClient = new OkHttpClient();
         this.gson = new Gson();
     }
